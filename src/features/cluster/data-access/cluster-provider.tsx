@@ -18,6 +18,11 @@ export enum ClusterNetwork {
 }
 
 export const defaultClusters: Cluster[] = [
+  // {
+  //   name: 'mainnet',
+  //   endpoint: clusterApiUrl('mainnet-beta'),
+  //   network: ClusterNetwork.Mainnet,
+  // },
   {
     name: 'devnet',
     endpoint: clusterApiUrl('devnet'),
