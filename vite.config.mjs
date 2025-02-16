@@ -4,7 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig({
-  plugins: [nodePolyfills({ exclude: ['fs'] }), react(), tsconfigPaths()],
+  plugins: [nodePolyfills({ overrides: { fs: 'memfs' } }), react(), tsconfigPaths()],
   test: {
     globals: true,
     environment: 'jsdom',
