@@ -29,7 +29,9 @@ export function HomeUiAllocation({ search, loading }: { search: (value: string) 
           return;
         }
         // Call the search function with the input value
-        await search(value);
+        await search(value).catch((error) => {
+          console.error(error);
+        });
       }}
     >
       <TextInput
@@ -50,10 +52,11 @@ export function HomeUiAllocation({ search, loading }: { search: (value: string) 
         leftSection={<WalletIcon color="violet" variant="light" radius="xl" size="lg" loading={loading} />}
         readOnly={loading}
         rightSection={
-          <ActionIcon type="submit" variant="light" radius="xl" size="lg" loading={loading}>
+          <ActionIcon type="submit" variant="light" radius="xl" size="lg" loading={loading} disabled={!value.trim().length}>
             <LucideSearch size={20} />{' '}
           </ActionIcon>
         }
+        maxLength={255}
       />
     </form>
   );

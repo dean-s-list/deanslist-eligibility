@@ -6,7 +6,7 @@ import { HomeUiAllocation } from './ui/home-ui-allocation';
 import { HomeUiResult } from './ui/home-ui-result';
 import { HomeUiWelcome } from './ui/home-ui-welcome';
 
-const endpoint = 'https://collection-allocation.samui.build';
+const endpoint = 'https://allocation.deanslist.services';
 
 export function HomeFeature() {
   // TODO: Add a loading state for the wallet data (timer or something)
@@ -35,14 +35,9 @@ export function HomeFeature() {
 
         <div>
           {mutationWallet.error ? (
-            <div>An error occurred: {mutationWallet.error.message}</div>
+            <div>An error occurred: {mutationWallet?.error?.message}</div>
           ) : null}
         </div>
-
-        {/* {mutationWallet.data ? ( "Hello"
-        ) : (
-          '^ Connect your wallet to check your allocation ^'
-        )} */}
       </Container>
       <Container bg="rgba(0, 0, 0, 0.3)" p="md" w={800} styles={{ root: { borderRadius: '16px' } }}>
         <HomeUiResult snapshots={snapshots} assets={assets} hasWalletData={!!mutationWallet.data} />

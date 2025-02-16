@@ -37,7 +37,7 @@ function Info() {
         </Button>
       </Popover.Target>
       <Popover.Dropdown style={{ pointerEvents: 'none' }}>
-        <Text size="md">Snapshots for the eligibility criteria are taken every X hours. So if you've recently met one of the criteria, come back in X hours and check that are whitelisted!</Text>
+        <Text size="md">Snapshots for the eligibility criteria are taken <b>every X hours</b>. So if you've recently met one of the criteria, come back in <b>X hours</b> and check that are whitelisted!</Text>
       </Popover.Dropdown>
     </Popover>
   );
