@@ -50,7 +50,7 @@ export function AppLayout({
           <Group justify="center" align="center">
             <Link to="/">
               <img
-                src="/src/assets/icon.png"
+                src="/icon.png"
                 alt="Logo"
                 style={{ height: 40, marginLeft: 20, marginTop: 8 }}
               />
@@ -83,7 +83,7 @@ export function AppLayout({
             <Group justify="center" align="center">
               <Link to="/">
                 <img
-                  src="/src/assets/logo.png"
+                  src="/logo.png"
                   alt="Logo"
                   style={{ height: 40, marginTop: 5 }}
                 />
