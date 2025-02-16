@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
-import { Container, Stack } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { useGetSnapshots } from './data-access/use-get-snapshots';
 import { useGetSnapshotsForWallet } from './data-access/use-get-snapshots-wallet';
 import { HomeUiAllocation } from './ui/home-ui-allocation';
 import { HomeUiResult } from './ui/home-ui-result';
 import { HomeUiWelcome } from './ui/home-ui-welcome';
+import { UiContainer } from '@/ui/ui-container';
 
 const endpoint = 'https://allocation.deanslist.services';
 
@@ -27,7 +28,7 @@ export function HomeFeature() {
   return (
     <Stack gap="lg" mb="xl" pb="xl">
       <HomeUiWelcome />
-      <Container w={800} styles={{ root: { textAlign: 'center' } }}>
+      <UiContainer styles={{ root: { textAlign: 'center' } }}>
         <HomeUiAllocation
           loading={mutationWallet.isPending}
           search={async (value) => mutationWallet.mutateAsync(value)}
@@ -38,10 +39,10 @@ export function HomeFeature() {
             <div>An error occurred: {mutationWallet?.error?.message}</div>
           ) : null}
         </div>
-      </Container>
-      <Container bg="rgba(0, 0, 0, 0.3)" p="md" w={800} styles={{ root: { borderRadius: '16px' } }}>
+      </UiContainer>
+      <UiContainer bg="rgba(0, 0, 0, 0.3)" p="md" styles={{ root: { borderRadius: '16px' } }}>
         <HomeUiResult snapshots={snapshots} assets={assets} hasWalletData={!!mutationWallet.data} />
-      </Container>
+      </UiContainer>
       {/* <pre>{JSON.stringify(mutationSnapshots, null, 2)}</pre> */}
     </Stack>
   );

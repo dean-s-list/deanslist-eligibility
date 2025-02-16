@@ -1,8 +1,7 @@
 import { ReactNode, Suspense } from 'react';
 import { IconBrandDiscord, IconBrandGithub, IconBrandTwitter } from '@tabler/icons-react';
 import { NavLink as Link } from 'react-router-dom';
-import { ActionIcon, AppShell, Burger, Container, Group, Loader, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { ActionIcon, AppShell, Container, Group, Loader, Text, Image } from '@mantine/core';
 import { ClusterUiChecker } from '@/features/cluster/ui';
 
 export interface AppLayoutLink {
@@ -19,7 +18,6 @@ export function AppLayout({
   links: AppLayoutLink[];
   profile: ReactNode;
 }) {
-  const [opened, { toggle }] = useDisclosure();
   return (
     <AppShell
       header={{ height: 60 }}
@@ -37,22 +35,18 @@ export function AppLayout({
           borderTop: 0,
         },
       }}
-      // navbar={{
-      // width: 300,
-      // breakpoint: 'sm',
-      // collapsed: { mobile: !opened },
-      // }}
       padding="md"
     >
       <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <Group justify="space-between" align="center" h="100%" px="md">
           <Group justify="center" align="center">
             <Link to="/">
-              <img
-                src="/icon.png"
+              <Image
+                src="/logo.png"
                 alt="Logo"
-                style={{ height: 40, marginLeft: 20, marginTop: 8 }}
+                h={40}
+                w="auto"
+                fit="contain"
               />
             </Link>
           </Group>
@@ -61,12 +55,6 @@ export function AppLayout({
           </Group>
         </Group>
       </AppShell.Header>
-
-      {/* <AppShell.Navbar p="md">
-      {links.map((link) => (
-        <NavLink key={link.to} component={Link} to={link.to} label={link.label} />
-      ))}
-      </AppShell.Navbar> */}
 
       <AppShell.Main className="gradient-purple">
         <Suspense fallback={<Loader />}>
@@ -80,16 +68,7 @@ export function AppLayout({
       <AppShell.Footer>
         <Container>
           <Group justify="space-between" align="center" h="100%" px="md">
-            <Group justify="center" align="center">
-              <Link to="/">
-                <img
-                  src="/logo.png"
-                  alt="Logo"
-                  style={{ height: 40, marginTop: 5 }}
-                />
-              </Link>
-            </Group>
-            <Group justify="center" align="center">
+            <Group justify="flex-start" align="center">
               <Text size="sm" c="gray" >
                 © 2025 DeansListDAO. All rights reserved.
               </Text>
