@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react';
 import { IconBrandDiscord, IconBrandGithub, IconBrandTwitter } from '@tabler/icons-react';
 import { NavLink as Link } from 'react-router-dom';
-import { ActionIcon, AppShell, Container, Group, Loader, Text, Image } from '@mantine/core';
+import { ActionIcon, AppShell, Group, Loader, Text, Image, Flex } from '@mantine/core';
 import { ClusterUiChecker } from '@/features/cluster/ui';
 
 export interface AppLayoutLink {
@@ -21,6 +21,7 @@ export function AppLayout({
   return (
     <AppShell
       header={{ height: 60 }}
+      footer={{ height: 60 }}
       styles={{
         header: {
           backgroundColor: 'rgb(0,0,0,0.2)',
@@ -66,14 +67,13 @@ export function AppLayout({
       </AppShell.Main>
 
       <AppShell.Footer>
-        <Container>
-          <Group justify="space-between" align="center" h="100%" px="md">
-            <Group justify="flex-start" align="center">
+          <Flex justify="center" align="center" h="100%" px="md" direction={{ base: 'column', sm: 'row' }} gap={{ base: 0, sm: 'lg' }} py={{ base: 'md', sm: 0 }}>
+            <Group justify="center" align="center">
               <Text size="sm" c="gray" >
                 © 2025 DeansListDAO. All rights reserved.
               </Text>
             </Group>
-            <Group justify="center" align="center" gap="sm">
+            <Group justify="center" align="center" gap="sm" wrap='nowrap'>
               <ActionIcon
                 size="lg"
                 color="gray"
@@ -108,8 +108,7 @@ export function AppLayout({
                 <IconBrandGithub size={18} stroke={1.5} />
               </ActionIcon>
             </Group>
-          </Group>
-        </Container>
+          </Flex>
       </AppShell.Footer>
     </AppShell>
   );

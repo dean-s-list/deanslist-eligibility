@@ -1,5 +1,5 @@
 import { IconCircleCheck, IconCircleDashed, IconQuestionMark } from '@tabler/icons-react';
-import { Alert, Stack, Text, Title, Tooltip } from '@mantine/core';
+import { Alert, Stack, Text, Title } from '@mantine/core';
 
 export function HomeUiResult({
   snapshots,
@@ -11,20 +11,20 @@ export function HomeUiResult({
   hasWalletData: boolean;
 }) {
   return (
-    <Stack >
-        <Title order={2} ta="center">
-          Eligibility Criteria
-        </Title>
-        {snapshots
-          .sort((a, b) => a.id.localeCompare(b.id))
-          .map((snapshot) => (
-            <HomeUiSnapshotItem
-              key={snapshot.id}
-              snapshot={snapshot}
-              assets={assets}
-              hasWalletData={hasWalletData}
-            />
-          ))}
+    <Stack>
+      <Title order={2} ta="center">
+        Eligibility Criteria
+      </Title>
+      {snapshots
+        .sort((a, b) => a.id.localeCompare(b.id))
+        .map((snapshot) => (
+          <HomeUiSnapshotItem
+            key={snapshot.id}
+            snapshot={snapshot}
+            assets={assets}
+            hasWalletData={hasWalletData}
+          />
+        ))}
     </Stack>
   );
 }
@@ -41,16 +41,15 @@ export function HomeUiSnapshotItem({
   const hasAllocation = assets[snapshot.id] > 0;
   return (
     <Alert
+    styles={{ body: { gap:0}, icon:{marginTop: 10}}}
       radius="xl"
       color={allocationColor(hasWalletData, hasAllocation)}
       key={snapshot.id}
-      title={
-        <Tooltip label={snapshot.description}>
-          <Text fw="bold">{snapshot.name}</Text>
-        </Tooltip>
-      }
+      title={<Text fw="bold">{snapshot.name}</Text>}
       icon={allocationIcon(hasWalletData, hasAllocation)}
-    />
+    >
+      <Text c="dimmed" size='xs'>{snapshot.description}</Text>
+    </Alert>
   );
 }
 

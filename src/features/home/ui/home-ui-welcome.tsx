@@ -30,7 +30,7 @@ export function HomeUiWelcome() {
 function Info() {
   const [opened, { close, open }] = useDisclosure(false);
   return (
-    <Popover width={350} position="left" withArrow shadow="md" opened={opened}>
+    <Popover width={350} position="top" withArrow shadow="md" opened={opened}>
       <Popover.Target>
         <Button onMouseEnter={open} onMouseLeave={close} color='grey' size="xs" variant="subtle" style={{ backgroundColor: 'transparent', padding: 0, marginBottom: '2px' }}>
           <IconInfoCircle size={20} />
