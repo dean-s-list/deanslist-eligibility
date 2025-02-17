@@ -1,4 +1,4 @@
-import type { StorybookConfig } from '@storybook/react-vite';
+import type { StorybookConfig } from '@storybook/react-vite'
 
 const config: StorybookConfig = {
   core: {
@@ -12,6 +12,6 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
-};
+}
 
-export default config;
+export default config

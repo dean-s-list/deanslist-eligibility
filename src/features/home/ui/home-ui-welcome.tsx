@@ -1,13 +1,13 @@
-import { Container, Indicator, Text, Title, Popover, Button } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import classes from './home-ui-welcome.module.css';
-import { LucideInfo } from 'lucide-react';
+import { LucideInfo } from 'lucide-react'
+import { Button, Container, Indicator, Popover, Text, Title } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import classes from './home-ui-welcome.module.css'
 
 export function HomeUiWelcome() {
   return (
     <Container styles={{ root: { textAlign: 'center' } }}>
       <Title className={classes.title} mt={20}>
-        Welcome to the {' '}
+        Welcome to the{' '}
         <Text
           inherit
           variant="gradient"
@@ -20,25 +20,35 @@ export function HomeUiWelcome() {
       </Title>
       <Indicator inline processing color="green" size={8}>
         <Text size="lg" maw={580} mx="auto" c="dimmed">
-         <Info /> Check if you are eligible to mint a Gen2 NFT.
+          <Info /> Check if you are eligible to mint a Gen2 NFT.
         </Text>
       </Indicator>
     </Container>
-  );
+  )
 }
 
 function Info() {
-  const [opened, { close, open }] = useDisclosure(false);
+  const [opened, { close, open }] = useDisclosure(false)
   return (
     <Popover width={350} position="top" withArrow shadow="md" opened={opened}>
       <Popover.Target>
-        <Button onMouseEnter={open} onMouseLeave={close} color='grey' size="xs" variant="subtle" style={{ backgroundColor: 'transparent', padding: 0, marginBottom: '2px' }}>
+        <Button
+          onMouseEnter={open}
+          onMouseLeave={close}
+          color="grey"
+          size="xs"
+          variant="subtle"
+          style={{ backgroundColor: 'transparent', padding: 0, marginBottom: '2px' }}
+        >
           <LucideInfo size={20} />
         </Button>
       </Popover.Target>
       <Popover.Dropdown style={{ pointerEvents: 'none' }}>
-        <Text size="md">Snapshots for the eligibility criteria are taken <b>every 24 hours</b>. So if you've recently met one of the criteria, come back in <b>24 hours</b> and check that you are whitelisted!</Text>
+        <Text size="md">
+          Snapshots for the eligibility criteria are taken <b>every 24 hours</b>. So if you've recently met one of the
+          criteria, come back in <b>24 hours</b> and check that you are whitelisted!
+        </Text>
       </Popover.Dropdown>
     </Popover>
-  );
+  )
 }

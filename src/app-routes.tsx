@@ -1,10 +1,10 @@
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import { AppLayout } from '@/app-layout';
-import { WalletButton } from '@/features/solana/solana-provider';
-import { NotFound } from './ui/ui-not-found';
-import { lazy } from 'react';
+import { lazy } from 'react'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+import { AppLayout } from '@/app-layout'
+import { WalletButton } from '@/features/solana/solana-provider'
+import { NotFound } from './ui/ui-not-found'
 
-const HomeFeature = lazy(() => import('./features/home/home.feature'));
+const HomeFeature = lazy(() => import('./features/home/home.feature'))
 
 const router = createBrowserRouter([
   {
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
       { path: '*', element: <NotFound /> },
     ],
   },
-]);
+])
 
 export function AppRoutes() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />
 }
