@@ -9,7 +9,7 @@ import { UiContainer } from '@/ui/ui-container';
 
 const endpoint = 'https://allocation.deanslist.services';
 
-export function HomeFeature() {
+export default function HomeFeature() {
   // TODO: Add a loading state for the wallet data (timer or something)
   const mutationSnapshots = useGetSnapshots(endpoint);
   const mutationWallet = useGetSnapshotsForWallet(endpoint);

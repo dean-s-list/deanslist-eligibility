@@ -1,5 +1,5 @@
-import { IconCircleCheck, IconCircleDashed, IconQuestionMark } from '@tabler/icons-react';
 import { Alert, Stack, Text, Title } from '@mantine/core';
+import { LucideCircleCheck, LucideCircleDashed, LucideCircleHelp } from 'lucide-react';
 
 export function HomeUiResult({
   snapshots,
@@ -62,7 +62,7 @@ function allocationColor(hasWalletData: boolean, hasAllocation: boolean) {
 
 function allocationIcon(hasWalletData: boolean, hasAllocation: boolean) {
   if (!hasWalletData) {
-    return <IconQuestionMark />;
+    return <LucideCircleHelp />;
   }
-  return hasAllocation ? <IconCircleCheck /> : <IconCircleDashed />;
+  return hasAllocation ? <LucideCircleCheck /> : <LucideCircleDashed />;
 }

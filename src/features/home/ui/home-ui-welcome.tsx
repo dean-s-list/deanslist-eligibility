@@ -1,7 +1,7 @@
 import { Container, Indicator, Text, Title, Popover, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './home-ui-welcome.module.css';
-import { IconInfoCircle } from '@tabler/icons-react';
+import { LucideInfo } from 'lucide-react';
 
 export function HomeUiWelcome() {
   return (
@@ -33,7 +33,7 @@ function Info() {
     <Popover width={350} position="top" withArrow shadow="md" opened={opened}>
       <Popover.Target>
         <Button onMouseEnter={open} onMouseLeave={close} color='grey' size="xs" variant="subtle" style={{ backgroundColor: 'transparent', padding: 0, marginBottom: '2px' }}>
-          <IconInfoCircle size={20} />
+          <LucideInfo size={20} />
         </Button>
       </Popover.Target>
       <Popover.Dropdown style={{ pointerEvents: 'none' }}>
