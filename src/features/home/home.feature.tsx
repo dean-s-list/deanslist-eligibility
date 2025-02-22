@@ -1,8 +1,9 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Stack } from '@mantine/core'
+import { HomeUiSelectedWallets } from '@/features/home/ui/home-ui-selected-wallets'
 import { UiContainer } from '@/ui/ui-container'
 import { useGetSnapshots } from './data-access/use-get-snapshots'
-import { useGetSnapshotsForWallet } from './data-access/use-get-snapshots-wallet'
+import { useResolveDomain } from './data-access/use-get-snapshots-wallet'
 import { HomeUiAllocation } from './ui/home-ui-allocation'
 import { HomeUiResult } from './ui/home-ui-result'
 import { HomeUiWelcome } from './ui/home-ui-welcome'
@@ -10,35 +11,73 @@ import { HomeUiWelcome } from './ui/home-ui-welcome'
 const endpoint = 'https://allocation.deanslist.services'
 
 export default function HomeFeature() {
+  const [address, setAddress] = useState<{ name: string; address: string }[]>([])
+  const lookupAddress = useMemo(() => {
+    return address.map((item) => item.address)
+  }, [address])
+
   // TODO: Add a loading state for the wallet data (timer or something)
-  const mutationSnapshots = useGetSnapshots(endpoint)
-  const mutationWallet = useGetSnapshotsForWallet(endpoint)
+  const querySnapshots = useGetSnapshots(endpoint, lookupAddress)
+  const mutationResolveDomain = useResolveDomain(endpoint)
+  const snapshots: {
+    id: string
+    description: string
+    name: string
+    allocations?: { address: string; amount: number; allocation: number }[]
+  }[] = querySnapshots.data ?? []
 
-  const snapshots: { id: string; description: string; name: string }[] = mutationSnapshots.data ?? []
+  const eligible = useMemo(
+    () =>
+      snapshots.reduce(
+        (acc, snapshot) => {
+          if (snapshot.allocations) {
+            snapshot.allocations.forEach((allocation) => (acc[allocation.address] = true))
+          }
+          return acc
+        },
+        {} as Record<string, boolean>,
+      ),
+    [snapshots],
+  )
 
-  const assets: Record<string, number> = useMemo(() => {
-    if (!mutationWallet.data) {
-      return {}
-    }
-    return Object.fromEntries(
-      Object.entries(mutationWallet.data.snapshots).map(([id, wallet]) => [id, wallet.allocation]),
-    )
-  }, [mutationWallet.data])
   return (
     <Stack gap="lg" mb="xl" pb="xl">
       <HomeUiWelcome />
       <UiContainer styles={{ root: { textAlign: 'center' } }}>
         <HomeUiAllocation
-          loading={mutationWallet.isPending}
-          search={async (value) => mutationWallet.mutateAsync(value)}
+          loading={mutationResolveDomain.isPending}
+          search={async (value) => {
+            if (value.includes(',')) {
+              // this is not good.
+              return
+            }
+            if (!address.find((item) => item.address === value)) {
+              if (value.includes('.')) {
+                // If it's a domain, we need to resolve it to an address
+                const res = await mutationResolveDomain.mutateAsync(value)
+                setAddress([...address, { name: value, address: res.address }])
+              } else {
+                setAddress([...address, { name: ellipsify(value), address: value }])
+              }
+            }
+          }}
         />
 
-        <div>{mutationWallet.error ? <div>An error occurred: {mutationWallet?.error?.message}</div> : null}</div>
+        <div>
+          {mutationResolveDomain.error ? <div>An error occurred: {mutationResolveDomain?.error?.message}</div> : null}
+        </div>
       </UiContainer>
-      <UiContainer bg="rgba(0, 0, 0, 0.3)" p="md" styles={{ root: { borderRadius: '16px' } }}>
-        <HomeUiResult snapshots={snapshots} assets={assets} hasWalletData={!!mutationWallet.data} />
+      {address.length ? <HomeUiSelectedWallets address={address} setAddress={setAddress} eligible={eligible} /> : null}
+      <UiContainer>
+        <HomeUiResult snapshots={snapshots} hasWalletData={lookupAddress.length > 0} />
       </UiContainer>
-      {/* <pre>{JSON.stringify(mutationSnapshots, null, 2)}</pre> */}
     </Stack>
   )
+}
+
+export function ellipsify(str = '', len = 4, delimiter = '..') {
+  const strLen = str.length
+  const limit = len * 2 + delimiter.length
+
+  return strLen >= limit ? str.substring(0, len) + delimiter + str.substring(strLen - len, strLen) : str
 }
