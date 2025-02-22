@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 
-export function useGetSnapshots(endpoint: string) {
+export function useGetSnapshots(endpoint: string, addresses: string[]) {
   return useQuery({
-    queryKey: ['snapshots', endpoint],
+    queryKey: ['snapshots', endpoint, addresses],
     queryFn: async () => {
-      return await fetch(`${endpoint}/snapshots`).then((res) => res.json())
+      return await fetch(`${endpoint}/snapshots?addresses=${addresses.join(',')}`).then((res) => res.json())
     },
   })
 }

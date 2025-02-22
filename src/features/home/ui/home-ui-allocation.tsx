@@ -4,13 +4,7 @@ import { LucideSearch } from 'lucide-react'
 import { ActionIcon, TextInput } from '@mantine/core'
 import { WalletIcon } from '@/features/solana/solana-provider'
 
-export function HomeUiAllocation({
-  search,
-  loading,
-}: {
-  search: (value: string) => Promise<{ snapshots: Record<string, { amount: number; allocation: number }> }>
-  loading: boolean
-}) {
+export function HomeUiAllocation({ search, loading }: { search: (value: string) => Promise<void>; loading: boolean }) {
   const wallet = useWallet()
   const [focused, setFocused] = useState(false) // State to track if the input is focused
   const [value, setValue] = useState('') // State to track the input value

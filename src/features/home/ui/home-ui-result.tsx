@@ -1,46 +1,82 @@
 import { LucideCircleCheck, LucideCircleDashed, LucideCircleHelp } from 'lucide-react'
-import { Alert, Stack, Text, Title } from '@mantine/core'
+import { Alert, Card, Group, Popover, Stack, Text, Title } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 
 export function HomeUiResult({
   snapshots,
-  assets,
   hasWalletData,
 }: {
   snapshots: { id: string; description: string; name: string }[]
-  assets: Record<string, number>
   hasWalletData: boolean
 }) {
   return (
-    <Stack>
-      <Title order={2} ta="center">
-        Eligibility Criteria
-      </Title>
-      {snapshots
-        .sort((a, b) => a.id.localeCompare(b.id))
-        .map((snapshot) => (
-          <HomeUiSnapshotItem key={snapshot.id} snapshot={snapshot} assets={assets} hasWalletData={hasWalletData} />
-        ))}
-    </Stack>
+    <Card radius="lg" shadow="sm" p="md" bg="rgba(0, 0, 0, 0.3)">
+      <Stack>
+        <Title order={2} ta="center">
+          Eligibility Criteria
+        </Title>
+        {snapshots
+          .sort((a, b) => a.id.localeCompare(b.id))
+          .map((snapshot) => (
+            <HomeUiSnapshotItem key={snapshot.id} snapshot={snapshot} hasWalletData={hasWalletData} />
+          ))}
+      </Stack>
+    </Card>
   )
 }
 
 export function HomeUiSnapshotItem({
   snapshot,
-  assets,
   hasWalletData,
 }: {
-  snapshot: { id: string; description: string; name: string }
-  assets: Record<string, number>
+  snapshot: {
+    id: string
+    description: string
+    name: string
+    allocations?: { address: string; amount: number; allocation: number }[]
+  }
   hasWalletData: boolean
 }) {
-  const hasAllocation = assets[snapshot.id] > 0
+  const [opened, { close, open }] = useDisclosure(false)
+  const hasAllocation = (snapshot.allocations ?? [])?.length > 0
+  const allocationCount = snapshot.allocations?.length ?? 0
+
   return (
     <Alert
-      styles={{ body: { gap: 0 }, icon: { marginTop: 10 } }}
-      radius="xl"
+      styles={{
+        label: { width: '100%' },
+        body: { gap: 0 },
+        icon: { marginTop: 10 },
+      }}
+      radius="md"
       color={allocationColor(hasWalletData, hasAllocation)}
       key={snapshot.id}
-      title={<Text fw="bold">{snapshot.name}</Text>}
+      title={
+        <Group
+          justify="space-between"
+          w="100%"
+          style={{
+            width: '100%',
+          }}
+        >
+          <Text fw="bold">{snapshot.name}</Text>
+          <Popover position="bottom" withArrow shadow="md" opened={opened} onClose={close}>
+            <Popover.Target>
+              <Text fw="bold" c="dimmed" onMouseEnter={open} onMouseLeave={close}>
+                {allocationCount} wallets
+              </Text>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <Text>You are eligible for {allocationCount} wallets</Text>
+              {snapshot.allocations?.map((allocation) => (
+                <Text c="dimmed" key={allocation.address}>
+                  {allocation.address}
+                </Text>
+              ))}
+            </Popover.Dropdown>
+          </Popover>
+        </Group>
+      }
       icon={allocationIcon(hasWalletData, hasAllocation)}
     >
       <Text c="dimmed" size="xs">

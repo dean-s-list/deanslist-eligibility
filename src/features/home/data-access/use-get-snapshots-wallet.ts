@@ -1,14 +1,14 @@
 import { PublicKey } from '@solana/web3.js'
 import { useMutation } from '@tanstack/react-query'
 
-export function useGetSnapshotsForWallet(endpoint: string) {
+export function useResolveDomain(endpoint: string) {
   return useMutation({
-    mutationFn: async (value: string) => {
-      const address = getWalletAddress(value)
-      if (!address) {
-        throw new Error('Invalid wallet address')
+    mutationFn: async (addressOrDomain: string) => {
+      if (isValidSolanaPublicKey(addressOrDomain) || !addressOrDomain.includes('.')) {
+        return addressOrDomain
       }
-      return await fetch(`${endpoint}/wallet/${address}`)
+
+      return await fetch(`${endpoint}/resolve/${addressOrDomain}`)
         .then((res) => {
           // TODO catch 500 error and return a more user-friendly message
           if (!res.ok) {
@@ -17,7 +17,6 @@ export function useGetSnapshotsForWallet(endpoint: string) {
           return res
         })
         .then((res) => res.json())
-        .then((res) => res as { snapshots: Record<string, { amount: number; allocation: number }> })
     },
   })
 }
@@ -29,11 +28,4 @@ function isValidSolanaPublicKey(value: string) {
   } catch {
     return false
   }
-}
-
-function getWalletAddress(value: string) {
-  if (isValidSolanaPublicKey(value) || value.includes('.')) {
-    return value
-  }
-  return false
 }
