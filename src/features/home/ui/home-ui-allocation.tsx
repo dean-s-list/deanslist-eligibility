@@ -1,10 +1,20 @@
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { LucideSearch } from 'lucide-react'
 import { ActionIcon, TextInput } from '@mantine/core'
 import { WalletIcon } from '@/features/solana/solana-provider'
 
-export function HomeUiAllocation({ search, loading }: { search: (value: string) => Promise<void>; loading: boolean }) {
+export function HomeUiAllocation({
+  error,
+  reset,
+  search,
+  loading,
+}: {
+  error?: ReactNode
+  reset: () => void
+  search: (value: string) => Promise<void>
+  loading: boolean
+}) {
   const wallet = useWallet()
   const [focused, setFocused] = useState(false) // State to track if the input is focused
   const [value, setValue] = useState('') // State to track the input value
@@ -37,10 +47,14 @@ export function HomeUiAllocation({ search, loading }: { search: (value: string) 
       <TextInput
         label="Wallet Address"
         placeholder="Ds52CDgqdWbTWsua1hgT3AuSSy4FNx2Ezge1br3jQ14a, DL.sol, Gen2.ser, etc."
-        // description="Enter your wallet address to check your allocation"
         required
         value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
+        onChange={(event) => {
+          if (error && event.currentTarget.value.trim().length === 0) {
+            reset()
+          }
+          setValue(event.currentTarget.value)
+        }}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         mt="md"
@@ -51,6 +65,8 @@ export function HomeUiAllocation({ search, loading }: { search: (value: string) 
         size="lg"
         leftSection={<WalletIcon color="violet" variant="light" radius="xl" size="lg" loading={loading} />}
         readOnly={loading}
+        error={error}
+        withErrorStyles={false}
         rightSection={
           <ActionIcon
             type="submit"
@@ -63,6 +79,7 @@ export function HomeUiAllocation({ search, loading }: { search: (value: string) 
             <LucideSearch size={20} />{' '}
           </ActionIcon>
         }
+        minLength={3}
         maxLength={255}
       />
     </form>

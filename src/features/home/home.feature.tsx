@@ -3,7 +3,7 @@ import { Stack } from '@mantine/core'
 import { HomeUiSelectedWallets } from '@/features/home/ui/home-ui-selected-wallets'
 import { UiContainer } from '@/ui/ui-container'
 import { useGetSnapshots } from './data-access/use-get-snapshots'
-import { useResolveDomain } from './data-access/use-get-snapshots-wallet'
+import { isValidSolanaPublicKey, useResolveDomain } from './data-access/use-get-snapshots-wallet'
 import { HomeUiAllocation } from './ui/home-ui-allocation'
 import { HomeUiResult } from './ui/home-ui-result'
 import { HomeUiWelcome } from './ui/home-ui-welcome'
@@ -16,7 +16,6 @@ export default function HomeFeature() {
     return address.map((item) => item.address)
   }, [address])
 
-  // TODO: Add a loading state for the wallet data (timer or something)
   const querySnapshots = useGetSnapshots(endpoint, lookupAddress)
   const mutationResolveDomain = useResolveDomain(endpoint)
   const snapshots: {
@@ -45,27 +44,20 @@ export default function HomeFeature() {
       <HomeUiWelcome />
       <UiContainer styles={{ root: { textAlign: 'center' } }}>
         <HomeUiAllocation
+          error={mutationResolveDomain.error ? mutationResolveDomain?.error?.message : null}
+          reset={mutationResolveDomain.reset}
           loading={mutationResolveDomain.isPending}
           search={async (value) => {
-            if (value.includes(',')) {
-              // this is not good.
+            const res = await mutationResolveDomain.mutateAsync(value)
+            const found = res.address
+            if (!found || address.find((item) => item.address === found)) {
               return
             }
-            if (!address.find((item) => item.address === value)) {
-              if (value.includes('.')) {
-                // If it's a domain, we need to resolve it to an address
-                const res = await mutationResolveDomain.mutateAsync(value)
-                setAddress([...address, { name: value, address: res.address }])
-              } else {
-                setAddress([...address, { name: ellipsify(value), address: value }])
-              }
-            }
+
+            const name = isValidSolanaPublicKey(value) ? ellipsify(value) : value
+            setAddress([...address, { name, address: found }])
           }}
         />
-
-        <div>
-          {mutationResolveDomain.error ? <div>An error occurred: {mutationResolveDomain?.error?.message}</div> : null}
-        </div>
       </UiContainer>
       {address.length ? <HomeUiSelectedWallets address={address} setAddress={setAddress} eligible={eligible} /> : null}
       <UiContainer>
@@ -75,7 +67,7 @@ export default function HomeFeature() {
   )
 }
 
-export function ellipsify(str = '', len = 4, delimiter = '..') {
+export function ellipsify(str = '', len = 4, delimiter = '....') {
   const strLen = str.length
   const limit = len * 2 + delimiter.length
 
