@@ -1,6 +1,7 @@
 import { ReactNode, Suspense } from 'react'
 import { NavLink as Link } from 'react-router-dom'
 import { ActionIcon, AppShell, Flex, Group, Image, Loader, Text } from '@mantine/core'
+import { SolanaJupiverseTerminal } from './features/solana/solana-jupiverse-terminal'
 
 export interface AppLayoutLink {
   label: string
@@ -42,7 +43,9 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
       </AppShell.Header>
 
       <AppShell.Main className="gradient-purple">
-        <Suspense fallback={<Loader />}>{children}</Suspense>
+        <Suspense fallback={<Loader />}>
+          {children} <SolanaJupiverseTerminal />{' '}
+        </Suspense>
       </AppShell.Main>
 
       <AppShell.Footer>
