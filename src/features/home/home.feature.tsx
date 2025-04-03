@@ -8,7 +8,7 @@ import { HomeUiAllocation } from './ui/home-ui-allocation'
 import { HomeUiResult } from './ui/home-ui-result'
 import { HomeUiWelcome } from './ui/home-ui-welcome'
 
-const endpoint = 'https://allocation.deanslist.services'
+const endpoint = 'https://allocation.island-dao.com'
 
 export default function HomeFeature() {
   const [address, setAddress] = useState<{ name: string; address: string }[]>([])
