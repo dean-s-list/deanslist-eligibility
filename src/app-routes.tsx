@@ -9,7 +9,7 @@ const HomeFeature = lazy(() => import('./features/home/home.feature'))
 const router = createBrowserRouter([
   {
     element: (
-      <AppLayout profile={<WalletButton />}>
+      <AppLayout profile={<WalletButton color="accent" />}>
         <Outlet />
       </AppLayout>
     ),

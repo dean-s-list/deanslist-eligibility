@@ -12,7 +12,7 @@ export function HomeUiSelectedWallets({
 }) {
   return (
     <UiContainer>
-      <Card radius="lg" shadow="sm" p="md" bg="rgba(0, 0, 0, 0.3)">
+      <Card radius="lg" shadow="sm" p="md">
         <Card.Section p="md">
           <Text fw="bold" size="lg">
             You are checking for the following addresses:

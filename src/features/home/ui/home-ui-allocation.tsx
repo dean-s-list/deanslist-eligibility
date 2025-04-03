@@ -63,7 +63,7 @@ export function HomeUiAllocation({
         labelProps={{ 'data-floating': floating }}
         radius="xl"
         size="lg"
-        leftSection={<WalletIcon color="violet" variant="light" radius="xl" size="lg" loading={loading} />}
+        leftSection={<WalletIcon color="accent" variant="light" radius="xl" size="lg" loading={loading} />}
         readOnly={loading}
         error={error}
         withErrorStyles={false}

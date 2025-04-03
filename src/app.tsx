@@ -10,7 +10,7 @@ const client = new QueryClient()
 export function App() {
   return (
     <QueryClientProvider client={client}>
-      <MantineProvider theme={theme} defaultColorScheme="dark">
+      <MantineProvider theme={theme} defaultColorScheme="light">
         <SolanaProvider>
           <AppRoutes />
         </SolanaProvider>

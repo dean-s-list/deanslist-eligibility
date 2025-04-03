@@ -10,7 +10,7 @@ export function HomeUiResult({
   hasWalletData: boolean
 }) {
   return (
-    <Card radius="lg" shadow="sm" p="md" bg="rgba(0, 0, 0, 0.3)">
+    <Card radius="lg" shadow="sm" p="md">
       <Stack>
         <Title order={2} ta="center">
           Eligibility Criteria

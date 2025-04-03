@@ -13,7 +13,8 @@ export function HomeUiWelcome() {
           variant="gradient"
           component="span"
           // gradient={{ from: 'rgba(28, 8, 43, 1)', to: 'rgba(210, 195, 253, 1)', deg: 360 }}
-          gradient={{ from: 'rgb(203, 136, 242)', to: 'rgb(245, 111, 111)', deg: 180 }}
+          // gradient={{ from: 'rgb(203, 136, 242)', to: 'rgb(245, 111, 111)', deg: 180 }}
+          gradient={{ from: 'rgba(171, 214, 179, 1)', to: 'rgb(45, 165, 165)', deg: 180 }}
         >
           DL Gen2 Mint!
         </Text>

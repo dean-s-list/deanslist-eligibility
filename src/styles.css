@@ -3,7 +3,14 @@
   background: linear-gradient(130.23deg, #242545 0%, #100c20 50%, #370c57 100%) !important;
 }
 
+.background {
+  background: linear-gradient(rgb(255, 255, 255),rgb(220, 252, 231),rgb(255, 255, 255))!important;
+}
+
 .gradient-pink {
   background: linear-gradient(111.92deg, #a770ef 0%, #cf8bf3 51%, #a770ef 100%) !important;
 }
-  
+
+:root {
+  --mantine-color-black: #061E1E;
+}

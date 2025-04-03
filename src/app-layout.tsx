@@ -1,6 +1,6 @@
 import { ReactNode, Suspense } from 'react'
 import { NavLink as Link } from 'react-router-dom'
-import { ActionIcon, AppShell, Flex, Group, Image, Loader, Text } from '@mantine/core'
+import { ActionIcon, Anchor, AppShell, Flex, Group, Image, Loader, Text } from '@mantine/core'
 
 export interface AppLayoutLink {
   label: string
@@ -14,13 +14,13 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
       footer={{ height: 60 }}
       styles={{
         header: {
-          backgroundColor: 'rgb(0,0,0,0.2)',
+          backgroundColor: 'rgb(255, 255, 255, 0.8)',
           backdropFilter: 'blur(5px)',
           WebkitBackdropFilter: 'blur(5px)', // For Safari
           borderBottom: 0,
         },
         footer: {
-          backgroundColor: 'rgb(0,0,0,0.2)',
+          backgroundColor: 'rgb(255, 255, 255, 0.8)',
           backdropFilter: 'blur(5px)',
           WebkitBackdropFilter: 'blur(5px)', // For Safari
           borderTop: 0,
@@ -30,18 +30,29 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
     >
       <AppShell.Header>
         <Group justify="space-between" align="center" h="100%" px="md">
-          <Group justify="center" align="center">
-            <Link to="/">
-              <Image src="/logo.png" alt="Logo" h={40} w="auto" fit="contain" />
-            </Link>
-          </Group>
+          <Anchor component={Link} to="/" underline="never">
+            <Group align="center" gap="xs">
+              <Image
+                src="/isldao.png"
+                alt="Logo"
+                h={40}
+                w="auto"
+                fit="contain"
+                radius={50}
+                style={{ border: '3px solid black' }}
+              />
+              <Text c="accent" fw="bold" size="xl">
+                IslandDAO
+              </Text>
+            </Group>
+          </Anchor>
           <Group justify="center" align="center">
             {profile}
           </Group>
         </Group>
       </AppShell.Header>
 
-      <AppShell.Main className="gradient-purple">
+      <AppShell.Main className="background">
         <Suspense fallback={<Loader />}>{children}</Suspense>
       </AppShell.Main>
 
@@ -57,7 +68,7 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
         >
           <Group justify="center" align="center">
             <Text size="sm" c="gray">
-              © 2025 DeansListDAO. All rights reserved.
+              © 2025 IslandDAO. All rights reserved.
             </Text>
           </Group>
           <Group justify="center" align="center" gap="sm" wrap="nowrap">
