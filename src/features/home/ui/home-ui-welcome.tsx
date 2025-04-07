@@ -16,12 +16,12 @@ export function HomeUiWelcome() {
           // gradient={{ from: 'rgb(203, 136, 242)', to: 'rgb(245, 111, 111)', deg: 180 }}
           gradient={{ from: 'rgba(171, 214, 179, 1)', to: 'rgb(45, 165, 165)', deg: 180 }}
         >
-          DL Gen2 Mint!
+          PERKS On-Chain Mint!
         </Text>
       </Title>
       <Indicator inline processing color="green" size={8}>
         <Text size="lg" maw={580} mx="auto" c="dimmed">
-          <Info /> Check if you are eligible to mint a Gen2 NFT.
+          <Info /> Check if you are eligible to mint an NFT.
         </Text>
       </Indicator>
     </Container>
