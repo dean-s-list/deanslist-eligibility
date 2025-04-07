@@ -77,7 +77,7 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
               color="gray"
               variant="subtle"
               component="a"
-              href="https://twitter.com/deanslistDAO"
+              href="https://twitter.com/islandDAO_DL"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -88,7 +88,7 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
               color="gray"
               variant="subtle"
               component="a"
-              href="https://discord.gg/deanslist"
+              href="https://discord.gg/dvHrj9SXQS"
               target="_blank"
               rel="noopener noreferrer"
             >
