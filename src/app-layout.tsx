@@ -77,7 +77,7 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
               color="gray"
               variant="subtle"
               component="a"
-              href="https://twitter.com/islandDAO_DL"
+              href="https://twitter.com/islanddao"
               target="_blank"
               rel="noopener noreferrer"
             >
