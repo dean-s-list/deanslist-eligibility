@@ -1,5 +1,5 @@
 import { LucideCircleCheck, LucideCircleDashed, LucideCircleHelp } from 'lucide-react'
-import { Alert, Card, Group, Popover, Stack, Text, Title } from '@mantine/core'
+import { Alert, Card, Flex, Group, Image, Popover, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
 export function HomeUiResult({
@@ -34,6 +34,7 @@ export function HomeUiSnapshotItem({
     description: string
     name: string
     allocations?: { address: string; amount: number; allocation: number }[]
+    image?: string
   }
   hasWalletData: boolean
 }) {
@@ -59,7 +60,10 @@ export function HomeUiSnapshotItem({
             width: '100%',
           }}
         >
-          <Text fw="bold">{snapshot.name}</Text>
+          <Flex gap="xs" align="center">
+            <Image src={snapshot.image} radius="xl" h={25} />
+            <Text fw="bold">{snapshot.name}</Text>
+          </Flex>
           <Popover position="bottom" withArrow shadow="md" opened={opened} onClose={close}>
             <Popover.Target>
               <Text fw="bold" c="dimmed" onMouseEnter={open} onMouseLeave={close}>
